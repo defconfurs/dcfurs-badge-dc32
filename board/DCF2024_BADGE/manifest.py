@@ -10,6 +10,4 @@ require("logging")
 require("tarfile")
 
 # Modules
-module("is31fl3737.py")
-module("touch.py")
 module("boot.py")
