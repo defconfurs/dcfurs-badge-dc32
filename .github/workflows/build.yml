@@ -1,0 +1,58 @@
+name: Build Firmware
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      
+      - name: Checkout micropython
+        uses: actions/checkout@v4
+        with:
+          repository: micropython/micropython
+          ref: v1.23.0
+          path: micropython
+
+      - name: Install ARM Toolchain
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi libnewlib-arm-none-eabi
+          arm-none-eabi-gcc --version
+
+      - name: Build mpy-cross
+        shell: bash
+        working-directory: micropython
+        run: make -C mpy-cross
+          
+      - name: Build submodules
+        shell: bash
+        working-directory: micropython/ports/rp2
+        run: |
+          make submodules
+          make clean
+      
+      - name: Build firmware
+        shell: bash
+        working-directory: micropython/ports/rp2
+        run: make BOARD_DIR=${{ github.workspace }}/board/DCF2024_BADGE
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Badge Firmware
+          path: micropython/ports/rp2/build-DCF2024_BADGE/firmware.uf2
