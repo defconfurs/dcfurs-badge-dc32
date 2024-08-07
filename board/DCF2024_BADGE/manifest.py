@@ -7,3 +7,8 @@ require("espflash")
 require("time")
 require("senml")
 require("logging")
+
+# Modules
+module("is31fl3737.py")
+module("touch.py")
+
