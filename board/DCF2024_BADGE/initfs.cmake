@@ -22,7 +22,7 @@ add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/initfs-tarball.h
     BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/initfs-tarball.tar.gz
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMAND tar -czvf ${CMAKE_CURRENT_BINARY_DIR}/initfs-tarball.tar.gz -C ${CMAKE_CURRENT_LIST_DIR}/../../initfs .
+    COMMAND tar -czvf ${CMAKE_CURRENT_BINARY_DIR}/initfs-tarball.tar.gz -C ${CMAKE_CURRENT_LIST_DIR}/../.. initfs
     COMMAND xxd -i initfs-tarball.tar.gz initfs-tarball.h
 )
 
