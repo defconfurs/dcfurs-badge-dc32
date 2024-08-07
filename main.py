@@ -3,6 +3,7 @@ from micropython import schedule
 import math
 import time
 from random import random
+from touch import TouchController
 import array
 import gc
 
@@ -80,7 +81,7 @@ class animation_rainbow_down:
     
     def update(self):
         self.offset -= 0.5
-        for i in range(len(self.badge.disp.downwards)):
+        for i in range(len(self.badge.disp.downward)):
             self.badge.disp.downward[i].hsv(self.badge.pallet[int(1024*(i+self.offset)/100)&0x3FF][0], 1.0, 100)
         self.badge.disp.update()
 
@@ -188,6 +189,8 @@ class badge(object):
         self.touch.channels[1].level_hi = 20000
         self.anim_index = 1
         self.half_bright = False
+        self.blush_count = 0
+        self.blush_mix = 0.5
         self.animations = [animation_rainbow_around(self),animation_rainbow_down(self),animation_chasers(self), animation_test_pattern(self)]
         self.pallet_index = 0
         self.pallet_functions = [pallet_rainbow, pallet_blue, pallet_red, pallet_green, pallet_purple]
