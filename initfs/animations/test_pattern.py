@@ -7,15 +7,14 @@ class test_pattern:
     def update(self):
         self.offset += 0.1
         if self.offset > 32.0: self.offset = 0.0
-        for i in range(len(self.badge.disp.downward)):
-            self.badge.disp.downward[i].r = 0.0
-            self.badge.disp.downward[i].g = 0.0
-            self.badge.disp.downward[i].b = 0.0
-        if (self.test_pattern[0] >> int(self.offset)) & 1: self.badge.disp.downward[44].value[2] = 1.0
-        if (self.test_pattern[1] >> int(self.offset)) & 1: self.badge.disp.downward[42].value[2] = 1.0
-        if (self.test_pattern[2] >> int(self.offset)) & 1: self.badge.disp.downward[30].value[2] = 1.0
-        if (self.test_pattern[3] >> int(self.offset)) & 1: self.badge.disp.downward[28].value[2] = 1.0
-        if (self.test_pattern[4] >> int(self.offset)) & 1: self.badge.disp.downward[29].value[2] = 1.0
-        if (self.test_pattern[5] >> int(self.offset)) & 1: self.badge.disp.downward[31].value[2] = 1.0
-        if (self.test_pattern[6] >> int(self.offset)) & 1: self.badge.disp.downward[43].value[2] = 1.0
-        if (self.test_pattern[7] >> int(self.offset)) & 1: self.badge.disp.downward[45].value[2] = 1.0
+
+        mask = 1 << int(self.offset)
+        self.badge.disp.clear()
+        if self.test_pattern[0] & mask: self.badge.disp.downward[44].b = 255
+        if self.test_pattern[1] & mask: self.badge.disp.downward[42].b = 255
+        if self.test_pattern[2] & mask: self.badge.disp.downward[30].b = 255
+        if self.test_pattern[3] & mask: self.badge.disp.downward[28].b = 255
+        if self.test_pattern[4] & mask: self.badge.disp.downward[29].b = 255
+        if self.test_pattern[5] & mask: self.badge.disp.downward[31].b = 255
+        if self.test_pattern[6] & mask: self.badge.disp.downward[43].b = 255
+        if self.test_pattern[7] & mask: self.badge.disp.downward[45].b = 255
