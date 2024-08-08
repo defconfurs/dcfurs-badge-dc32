@@ -99,6 +99,7 @@ class badge(object):
 
     def next(self, seek=1):
         """Seek to the next animation"""
+        self.disp.clear()
         self.animation_index = (self.animation_index + seek) % len(self.animation_list)
         self.animation_current = self.animation_list[self.animation_index](self)
         print(f"Playing animation: {self.animation_current.__qualname__}")
