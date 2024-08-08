@@ -23,12 +23,6 @@ class rgb_value(object):
     def g(self): return self.value[1]
     @property
     def b(self): return self.value[2]
-    @property 
-    def h(self): return self.hsv_value[0]
-    @property 
-    def s(self): return self.hsv_value[1]
-    @property 
-    def v(self): return self.hsv_value[2]
     @r.setter
     def r(self, value):
         self.value[0] = int(value)
@@ -38,15 +32,23 @@ class rgb_value(object):
     @b.setter
     def b(self, value):
         self.value[2] = int(value)
+
+    @property 
+    def h(self): return self.hsv_value[0]
+    @property 
+    def s(self): return self.hsv_value[1]
+    @property 
+    def v(self): return self.hsv_value[2]
     @h.setter
-    def r(self, value):
+    def h(self, value):
         self.hsv_value[0] = value
     @s.setter
-    def g(self, value):
+    def s(self, value):
         self.hsv_value[1] = value
     @v.setter
-    def b(self, value):
+    def v(self, value):
         self.hsv_value[2] = value
+
     def __repr__(self):
         return f"<RGB: {self.value[0]}, {self.value[1]}, {self.value[2]}>"
     def set(self, r, g, b):
