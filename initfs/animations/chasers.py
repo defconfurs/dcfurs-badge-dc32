@@ -76,8 +76,8 @@ class chasers:
             #print(self.framebuf[i])
 
         self.eye_offset += 0.5
-        for i in range(len(self.badge.disp.eye1)):
-            self.badge.disp.eye1[i].hsv((i+self.eye_offset)/len(self.framebuf), 1.0, self.brightness)
-        for i in range(len(self.badge.disp.eye2)):
-            self.badge.disp.eye2[i].hsv((i+self.eye_offset)/len(self.framebuf), 1.0, self.brightness)
+        for i in range(len(self.badge.disp.left_eye)):
+            self.badge.disp.left_eye[i].hsv((i+self.eye_offset)/len(self.framebuf), 1.0, self.brightness)
+        for i in range(len(self.badge.disp.right_eye)):
+            self.badge.disp.right_eye[i].hsv((i+self.eye_offset)/len(self.framebuf), 1.0, self.brightness)
         self.badge.disp.update()
