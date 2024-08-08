@@ -132,7 +132,7 @@ class is31fl3737(object):
     left_eye    = [leds[18],leds[19],leds[17]]
     right_eye   = [leds[43],leds[42],leds[44]]
 
-    clockwise   = right_ear + right_tuft + right_cheek + [leds[30],leds[31]] +  [i for i in reversed(left_cheek + left_tuft + left_ear)]
+    clockwise   = right_ear + right_tuft + right_cheek + [leds[30],leds[31]] +  [i for i in reversed(left_ear + left_tuft + left_cheek)]
     downward = [leds[12],leds[6],leds[11],leds[5],leds[10],leds[4],leds[9],leds[3],leds[8],leds[2],leds[7],leds[1],
                 leds[23],leds[37],leds[24],leds[38],leds[18],leds[43],leds[17],leds[44],leds[21],leds[40],leds[22],leds[39],leds[19],leds[42],leds[20],leds[41],
                 leds[36],leds[25],leds[35],leds[26],leds[34],leds[27],leds[16],leds[45],leds[15],leds[46],leds[14],leds[47],leds[13],leds[48],leds[33],leds[28],

@@ -80,4 +80,3 @@ class chasers:
             self.badge.disp.left_eye[i].hsv((i+self.eye_offset)/len(self.framebuf), 1.0, self.brightness)
         for i in range(len(self.badge.disp.right_eye)):
             self.badge.disp.right_eye[i].hsv((i+self.eye_offset)/len(self.framebuf), 1.0, self.brightness)
-        self.badge.disp.update()

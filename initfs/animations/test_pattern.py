@@ -19,3 +19,8 @@ class test_pattern:
         if self.test_pattern[5] & mask: self.badge.disp.downward[31].b = 255
         if self.test_pattern[6] & mask: self.badge.disp.downward[43].b = 255
         if self.test_pattern[7] & mask: self.badge.disp.downward[45].b = 255
+
+
+
+[4288554444,  4201042,  2195458,  3426361,  161,  148228, 4235264, 69632]
+[0xFF9E25CC, 0x401A52, 0x218002, 0x344839, 0xA1, 0x24304, 0x40A000, 0x11000]
