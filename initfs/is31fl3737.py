@@ -120,21 +120,16 @@ class is31fl3737(object):
     right_tuft  = [leds[37],leds[38],leds[40],leds[39],leds[41]]
     left_cheek  = [leds[16],leds[15],leds[14],leds[13]]
     right_cheek = [leds[45],leds[46],leds[47],leds[48]]
+    cheeks      = left_cheek + right_cheek
     nose        = [leds[36],leds[25],leds[35],leds[26],leds[34],leds[27],leds[33],leds[28],leds[32],leds[29],leds[31],leds[30]]
     left_eye    = [leds[18],leds[19],leds[17]]
     right_eye   = [leds[43],leds[42],leds[44]]
-    clockwise   = [leds[ 6],leds[ 5],leds[ 4],leds[ 3],leds[ 2],leds[ 1],                                                       # right_ear
-                   leds[37],leds[43],leds[44],leds[38],leds[40],leds[42],leds[39],leds[41],                                     # tuft and eye at once
-                   leds[45],leds[46],leds[47],leds[48],                                                                         # right_cheek
-                   leds[30],leds[28],leds[26],leds[29],leds[27],leds[25],leds[36],leds[34],leds[32],leds[35],leds[33],leds[31], # nose
-                   leds[13],leds[14],leds[15],leds[16],                                                                         # left_cheek
-                   leds[20],leds[22],leds[19],leds[21],leds[24],leds[17],leds[18],leds[23],                                     # tuft and eyes at once
-                   leds[ 7],leds[ 8],leds[ 9],leds[10],leds[11],leds[12]]                                                       # left_ear
+
+    clockwise   = right_ear + right_tuft + right_cheek + [leds[30],leds[31]] +  [i for i in reversed(left_cheek + left_tuft + left_ear)]
     downward = [leds[12],leds[6],leds[11],leds[5],leds[10],leds[4],leds[9],leds[3],leds[8],leds[2],leds[7],leds[1],
                 leds[23],leds[37],leds[24],leds[38],leds[18],leds[43],leds[17],leds[44],leds[21],leds[40],leds[22],leds[39],leds[19],leds[42],leds[20],leds[41],
                 leds[36],leds[25],leds[35],leds[26],leds[34],leds[27],leds[16],leds[45],leds[15],leds[46],leds[14],leds[47],leds[13],leds[48],leds[33],leds[28],
                 leds[32],leds[29],leds[31],leds[30]]
-    cheeks = [leds[16],leds[45],leds[15],leds[46],leds[14],leds[47],leds[13],leds[48]] # for blush
 
     def __init__(self):
         self.i2c = I2C(0, scl=Pin(1), sda=Pin(0))
