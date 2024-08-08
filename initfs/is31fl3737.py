@@ -51,10 +51,17 @@ class rgb_value(object):
 
     def __repr__(self):
         return f"<RGB: {self.value[0]}, {self.value[1]}, {self.value[2]}>"
+
     def set(self, r, g, b):
         self.value[0] = r
         self.value[1] = g
         self.value[2] = b
+
+    def copy(self, other):
+        self.value[0] = other.value[0]
+        self.value[1] = other.value[1]
+        self.value[2] = other.value[2]
+
     def hsv(self, hue, sat, val, debug=False, ret_value=False):
         self.hsv_value[0] = hue
         self.hsv_value[1] = sat

@@ -108,9 +108,9 @@ class badge(object):
         if mix > 1.0: mix = 1.0
         if mix < 0.0: mix = 0.0
         for i in range(len(self.disp.cheeks)):
-            self.disp.cheeks[i].r = (self.disp.downward[i].r * (1-mix)) + (mix * 255)
-            self.disp.cheeks[i].g = (self.disp.downward[i].g * (1-mix)) + (mix * 10)
-            self.disp.cheeks[i].b = (self.disp.downward[i].b * (1-mix)) + (mix * 10)
+            self.disp.cheeks[i].r = (self.disp.cheeks[i].r * (1-mix)) + (mix * 255)
+            self.disp.cheeks[i].g = (self.disp.cheeks[i].g * (1-mix)) + (mix * 10)
+            self.disp.cheeks[i].b = (self.disp.cheeks[i].b * (1-mix)) + (mix * 10)
 
     def isr_update(self,*args):
         schedule(self.update, self)
@@ -158,8 +158,15 @@ class badge(object):
         else:                self.disp.brightness = 255                
 
         self.animation_current.update()
+
+        # Mix the blush effect into the cheeks - then restore the state of the
+        # cheeks when we're done so we don't interfere with any animation state
+        backup = [rgb_value(i.r, i.g, i.b) for i in self.disp.cheeks]
         self.blush(self.blush_mix)
         self.disp.update()
+        for i in range(len(backup)):
+            self.disp.cheeks[i].copy(backup[i])
+
         gc.collect()
 
     def run(self):
