@@ -7,9 +7,10 @@ class test_pattern:
     def update(self):
         self.offset += 0.1
         if self.offset > 32.0: self.offset = 0.0
+        for i in range(len(self.badge.disp.downward)):
+            self.badge.disp.downward[i].set(0, 0, 0)
 
         mask = 1 << int(self.offset)
-        self.badge.disp.clear()
         if self.test_pattern[0] & mask: self.badge.disp.downward[44].b = 255
         if self.test_pattern[1] & mask: self.badge.disp.downward[42].b = 255
         if self.test_pattern[2] & mask: self.badge.disp.downward[30].b = 255
