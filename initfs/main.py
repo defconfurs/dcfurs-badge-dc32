@@ -6,6 +6,7 @@ from random import random
 from touch import TouchController
 import array
 import gc
+import animations
 
 from is31fl3737 import is31fl3737, rgb_value
 
@@ -67,11 +68,9 @@ class badge(object):
         self.touch.channels[0].level_hi = 20000
         self.touch.channels[1].level_lo = 15000
         self.touch.channels[1].level_hi = 20000
-        self.anim_index = 1
         self.half_bright = False
         self.blush_count = 0
         self.blush_mix = 0.5
-        self.animations = [animation_rainbow_around(self),animation_rainbow_down(self),animation_chasers(self), animation_test_pattern(self)]
         self.pallet_index = 0
         self.pallet_functions = [pallet_rainbow, pallet_blue, pallet_red, pallet_green, pallet_purple]
 
