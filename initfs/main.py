@@ -59,126 +59,6 @@ def pallet_green(target):
 def pallet_purple(target):
     pallet_set_colour(target, 0.25, 0.3, 0.8, 0.4)
 
-class animation_rainbow_around:
-    def __init__(self, badge):
-        self.badge = badge
-        self.offset = 0.0
-    
-    def update(self):
-        self.offset += 0.5
-        for i in range(len(self.badge.disp.clockwise)):
-            self.badge.disp.clockwise[i].hsv(self.badge.pallet[int(1024*((i+self.offset)/60))&0x3FF][0], 1.0, 100)
-        for i in range(len(self.badge.disp.eye1)):
-            self.badge.disp.eye1[i].hsv(self.badge.pallet[int(1024*((i+self.offset)/46))&0x3FF][0], 1.0, 200)
-        for i in range(len(self.badge.disp.eye2)):
-            self.badge.disp.eye2[i].hsv(self.badge.pallet[int(1024*((i+self.offset)/46))&0x3FF][0], 1.0, 200)
-        self.badge.disp.update()
-
-class animation_rainbow_down:
-    def __init__(self, badge):
-        self.badge = badge
-        self.offset = 0.0
-    
-    def update(self):
-        self.offset -= 0.5
-        for i in range(len(self.badge.disp.downward)):
-            self.badge.disp.downward[i].hsv(self.badge.pallet[int(1024*(i+self.offset)/100)&0x3FF][0], 1.0, 100)
-        self.badge.disp.update()
-
-class animation_chasers:
-    def __init__(self, badge):
-        self.badge = badge
-        self.traces = []
-        self.last = time.ticks_ms()
-        self.next = self.last + int(random() * 1000)
-        self.max_traces = 3
-        self.decay = 0.95
-        self.brightness = 255
-        self.buffer = [rgb_value() for i in range(46)]
-        self.eye_offset = 0.0
-
-    def update(self):
-        if time.ticks_ms() > self.next:
-            colour = self.badge.pallet[int(1024*random())][0]
-            speed = (0.5-((random()-0.5)**2))*1.2*(1 if (random()>0.5) else 0)
-            
-            #                      0      1               2            3            4         5
-            #                   colour  speed           position    life_rate      life      record 
-            self.traces.append([colour, speed, float(random()*46), (random()*0.07), 1.0,  array.array("f", [0]*46)])
-            self.next = time.ticks_ms() + int(random()*3500)
-        
-        for trace in self.traces:
-            if trace[4] <= 0:
-                self.traces.remove(trace)
-
-        for i in range(len(self.badge.disp.clockwise)):
-            self.buffer[i].r = 0.0
-            self.buffer[i].g = 0.0
-            self.buffer[i].b = 0.0
-
-        for trace in self.traces:
-            trace[4] -= trace[3]
-            if trace[4] < 0:
-                trace[4] = 0
-            if trace[4] > 0.1:
-                end_gain = 1.0
-            else:
-                end_gain = trace[4] * 10.0
-            for i in range(len(self.badge.disp.clockwise)):
-                trace[5][i] *= (self.decay * end_gain)
-            
-            trace[2] += trace[1]
-            trace[5][int(trace[2])%len(self.badge.disp.clockwise)] = self.brightness * end_gain
-
-            for i in range(len(self.badge.disp.clockwise)):
-                r,g,b = self.buffer[0].hsv(trace[0],1.0,trace[5][i],1.0,ret_value=True)
-                self.buffer[i].value[0] += r
-                self.buffer[i].value[1] += g
-                self.buffer[i].value[2] += b
-
-        for i in range(len(self.badge.disp.clockwise)):
-            if self.buffer[i].r > self.brightness: self.buffer[i].r = self.brightness
-            if self.buffer[i].g > self.brightness: self.buffer[i].g = self.brightness
-            if self.buffer[i].b > self.brightness: self.buffer[i].b = self.brightness
-            if self.buffer[i].r < 0: self.buffer[i].r = 0
-            if self.buffer[i].g < 0: self.buffer[i].g = 0
-            if self.buffer[i].b < 0: self.buffer[i].b = 0
-            self.badge.disp.clockwise[i].value[0] = int(self.buffer[i].r)
-            self.badge.disp.clockwise[i].value[1] = int(self.buffer[i].g)
-            self.badge.disp.clockwise[i].value[2] = int(self.buffer[i].b)
-            #print(f"{self.buffer[i].r},{self.buffer[i].g},{self.buffer[i].b}")
-            #print(self.badge.disp.clockwise[i])
-
-        self.eye_offset += 0.5
-        for i in range(len(self.badge.disp.eye1)):
-            self.badge.disp.eye1[i].hsv((i+self.eye_offset)/46, 1.0, self.brightness)
-        for i in range(len(self.badge.disp.eye2)):
-            self.badge.disp.eye2[i].hsv((i+self.eye_offset)/46, 1.0, self.brightness)
-        self.badge.disp.update()
-
-class animation_test_pattern:
-    def __init__(self, badge):
-        self.badge = badge
-        self.offset = 0.0
-        self.test_pattern = [4288554444, 4201042, 2195458, 3426361, 161, 148228, 4235264, 69632]
-
-    def update(self):
-        self.offset += 0.1
-        if self.offset > 32.0: self.offset = 0.0
-        for i in range(len(self.badge.disp.downward)):
-            self.badge.disp.downward[i].r = 0.0
-            self.badge.disp.downward[i].g = 0.0
-            self.badge.disp.downward[i].b = 0.0
-        if (self.test_pattern[0] >> int(self.offset)) & 1: self.badge.disp.downward[44].value[2] = 1.0
-        if (self.test_pattern[1] >> int(self.offset)) & 1: self.badge.disp.downward[42].value[2] = 1.0
-        if (self.test_pattern[2] >> int(self.offset)) & 1: self.badge.disp.downward[30].value[2] = 1.0
-        if (self.test_pattern[3] >> int(self.offset)) & 1: self.badge.disp.downward[28].value[2] = 1.0
-        if (self.test_pattern[4] >> int(self.offset)) & 1: self.badge.disp.downward[29].value[2] = 1.0
-        if (self.test_pattern[5] >> int(self.offset)) & 1: self.badge.disp.downward[31].value[2] = 1.0
-        if (self.test_pattern[6] >> int(self.offset)) & 1: self.badge.disp.downward[43].value[2] = 1.0
-        if (self.test_pattern[7] >> int(self.offset)) & 1: self.badge.disp.downward[45].value[2] = 1.0
-        
-
 class badge(object):
     def __init__(self):
         self.disp = is31fl3737()
@@ -206,12 +86,23 @@ class badge(object):
         self.sw4_last  = 0
         self.sw5_last  = 0
 
+        # Setup the initial animation
+        self.animation_list = animations.all()
+        self.animation_index = 0
+        self.next(0)
+
         #self.pallet = [[0.0,0.0,0.0] for i in range(1024)]
         self.pallet = [array.array("f", [0.0,0.0,0.0]) for i in range(1024)]
         self.pallet_functions[self.pallet_index](self.pallet)
 
         print("Dreams are messages from the deep")
         self.timer = Timer(mode=Timer.PERIODIC, freq=15, callback=self.isr_update)
+
+    def next(self, seek=1):
+        """Seek to the next animation"""
+        self.animation_index = (self.animation_index + seek) % len(self.animation_list)
+        self.animation_current = self.animation_list[self.animation_index](self)
+        print(f"Playing animation: {self.animation_current.__qualname__}")
 
     def blush(self, mix):
         if mix > 1.0: mix = 1.0
@@ -250,9 +141,7 @@ class badge(object):
             if self.sw4_last > 10: # long press
                 self.half_bright = not self.half_bright
             else:
-                self.anim_index += 1
-                if self.anim_index >= len(self.animations): 
-                    self.anim_index = 0
+                self.next(1)
         elif self.sw5_count == 0 and self.sw5_last > 0:
             if self.sw5_last > 10:
                 self.pallet_index += 1
@@ -260,17 +149,15 @@ class badge(object):
                     self.pallet_index = 0
                 self.pallet_functions[self.pallet_index](self.pallet)
             else:
-                self.anim_index -= 1
-                if self.anim_index < 0:
-                    self.anim_index = len(self.animations)-1
-        
+                self.next(-1)
+
         self.sw4_last = self.sw4_count
         self.sw5_last = self.sw5_count
 
         if self.half_bright: self.disp.brightness = 50
         else:                self.disp.brightness = 255                
 
-        self.animations[self.anim_index].update()
+        self.animation_current.update()
         self.blush(self.blush_mix)
         self.disp.update()
         gc.collect()
