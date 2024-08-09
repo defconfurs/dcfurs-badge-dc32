@@ -94,7 +94,7 @@ class badge(object):
         self.pallet = [array.array("f", [0.0,0.0,0.0]) for i in range(1024)]
         self.pallet_functions[self.pallet_index](self.pallet)
 
-        print("Dreams are messages from the deep")
+        print("Oh what a day. WHAT A LOVELY DAY!")
         self.timer = Timer(mode=Timer.PERIODIC, freq=15, callback=self.isr_update)
 
     def next(self, seek=1):
@@ -118,14 +118,21 @@ class badge(object):
     def update(self,*args):
         self.touch.update()
         if (self.touch.channels[0].level > 0.3) or (self.touch.channels[1].level > 0.3):
+            # Invoke the animation's boop method, if present.
+            if (hasattr(self.animation_current, "boop") and
+                callable(self.animation_current.boop) and
+                self.blush_count < 50):
+                self.animation_current.boop()
+
+            # Start blushing
             self.blush_count = 50
             if self.blush_mix < 1.0:
                 self.blush_mix += 0.5
         else:
+            # Fade out the blush
             if self.blush_count > 0:
                 self.blush_count -= 1
-            else:
-                if self.blush_mix > 0.0:
+            elif self.blush_mix > 0.0:
                     self.blush_mix -= 0.05
 
         self.sw4_state <<= 1
