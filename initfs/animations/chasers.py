@@ -19,15 +19,14 @@ class chasers:
         self.eye_offset = 0.0
 
     def update(self):
-        if time.ticks_ms() > self.next:
-            colour = self.badge.pallet[int(1024*random())][0]
-            speed = (0.5-((random()-0.5)**2))*1.2*(1 if (random()>0.5) else 0)
+        if (time.ticks_ms() > self.next) and (len(self.traces) <= self.max_traces):
+            speed = (0.5-((random()-0.5)**2))*1.2
 
             self.traces.append([
-                colour,                                     # colour
+                self.badge.pallet[int(1024*random())][0],   # colour
                 speed,                                      # speed
                 float(random()*len(self.framebuf)),         # position
-                (random()*0.07),                            # life_rate
+                0.01 + (random()*0.05),                     # life_rate
                 1.0,                                        # life
                 array.array("f", [0]*len(self.framebuf))]   # record
             )
