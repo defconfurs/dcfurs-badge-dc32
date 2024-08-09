@@ -52,14 +52,14 @@ class rgb_value(object):
         """
         # Convert hue to an angle and compute the remainder mod 60
         hue = int(hue * 360) % 360
-        rem = hue // 60
+        rem = hue % 60
 
         # Convert saturation into a byte and do the rest in fixed point.
         sat = int(sat * 256)
         val = int(val)
         p = val * (256 - sat) >> 8
         q = val * (256 - (rem * sat // 60)) >> 8
-        t = val * (256 - (256 - rem) * sat // 60) >> 8
+        t = val * (256 - (60 - rem) * sat // 60) >> 8
 
         if hue < 60:
             self.r = val
