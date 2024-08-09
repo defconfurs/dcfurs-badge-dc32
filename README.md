@@ -3,6 +3,10 @@
 
 We will be promoting builds from this repo to releases perodically, see the releases section for thje latest firmware.
 
+## Updating
+
+When you load a new firmware uf2 file, it will not delete the existing micropython filesystem, so if you want updated python files, you can either copy them from this repo or delte all the files from that filesystem and hit the reset button on the badge and it will reload them.
+
 ## TODO
 
 - Boop is still not complete.   The touch code is working, we just dont have the animation yet.
