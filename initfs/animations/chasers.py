@@ -57,10 +57,10 @@ class chasers:
             trace[5][int(trace[2])%len(self.framebuf)] = self.brightness * end_gain
 
             for i in range(len(self.framebuf)):
-                r,g,b = self.buffer[0].hsv(trace[0],1.0,trace[5][i],1.0,ret_value=True)
-                self.buffer[i].r += r
-                self.buffer[i].g += g
-                self.buffer[i].b += b
+                hsv = rgb_value(h=trace[0], s=1.0, v=trace[5][i])
+                self.buffer[i].r += hsv.r
+                self.buffer[i].g += hsv.g
+                self.buffer[i].b += hsv.b
 
         for i in range(len(self.framebuf)):
             if self.buffer[i].r > self.brightness: self.buffer[i].r = self.brightness

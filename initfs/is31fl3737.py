@@ -6,17 +6,13 @@ import array
 class rgb_value(object):
     def __init__(self, r=0, g=0, b=0, h=0, s=0, v=0):
         self.value = array.array("B", [0]*3)
-        self.hsv_value = array.array("f", [0]*3)
         if h or s or v:
             self.hsv(h,s,v)
         else:
             self.value[0] = r
             self.value[1] = g
             self.value[2] = b
-        self.hsv_value[0] = h
-        self.hsv_value[1] = s
-        self.hsv_value[2] = v
-    
+
     @property 
     def r(self): return self.value[0]
     @property
@@ -33,22 +29,6 @@ class rgb_value(object):
     def b(self, value):
         self.value[2] = int(value)
 
-    @property 
-    def h(self): return self.hsv_value[0]
-    @property 
-    def s(self): return self.hsv_value[1]
-    @property 
-    def v(self): return self.hsv_value[2]
-    @h.setter
-    def h(self, value):
-        self.hsv_value[0] = value
-    @s.setter
-    def s(self, value):
-        self.hsv_value[1] = value
-    @v.setter
-    def v(self, value):
-        self.hsv_value[2] = value
-
     def __repr__(self):
         return f"<RGB: {self.value[0]}, {self.value[1]}, {self.value[2]}>"
 
@@ -62,32 +42,49 @@ class rgb_value(object):
         self.value[1] = other.value[1]
         self.value[2] = other.value[2]
 
-    def hsv(self, hue, sat, val, debug=False, ret_value=False):
-        self.hsv_value[0] = hue
-        self.hsv_value[1] = sat
-        self.hsv_value[2] = val
-        hue = (int(hue*256)&0xFF)/256
-        i = int(((hue) * 6.0) % 6)
-        f = ((hue) * 6.0) - i
-        v = (val)
-        p = (val) * (1.0 - (sat))
-        q = (val) * (1.0 - f * (sat))
-        t = (val) * (1.0 - (1.0 - f) * (sat))
-        i = int(i)
-        if   (i == 0): r = v; g = t; b = p
-        elif (i == 1): r = q; g = v; b = p
-        elif (i == 2): r = p; g = v; b = t
-        elif (i == 3): r = p; g = q; b = v
-        elif (i == 4): r = t; g = p; b = v
-        elif (i == 5): r = v; g = p; b = q
-        #if debug: print(f"{hue}/{sat}/{val} - i{i},f{f},v{v},p{p},q{q},t{t} - {r},{g},{b}")
-        if ret_value:
-            return (int(r), int(g), int(b))
-        else:
-            self.value[0] = int(r)
-            self.value[1] = int(g)
-            self.value[2] = int(b)
+    def hsv(self, hue, sat, val=255):
+        """
+        Set the pixel colour from HSV coordinates
+        
+        hue: floating point in the range of 0.0 to 1.0
+        sat: floating point in the range of 0.0 to 1.0
+        val: integer intensity in the range of 0 to 255
+        """
+        # Convert hue to an angle and compute the remainder mod 60
+        hue = int(hue * 360) % 360
+        rem = hue // 60
 
+        # Convert saturation into a byte and do the rest in fixed point.
+        sat = int(sat * 256)
+        val = int(val)
+        p = val * (256 - sat) >> 8
+        q = val * (256 - (rem * sat // 60)) >> 8
+        t = val * (256 - (256 - rem) * sat // 60) >> 8
+
+        if hue < 60:
+            self.r = val
+            self.g = t
+            self.b = p
+        elif hue < 120:
+            self.r = q
+            self.g = val
+            self.b = p
+        elif hue < 180:
+            self.r = p
+            self.g = val
+            self.b = t
+        elif hue < 240:
+            self.r = p
+            self.g = q
+            self.b = val
+        elif hue < 300:
+            self.r = t
+            self.g = p
+            self.b = val
+        elif hue < 360:
+            self.r = val
+            self.g = p
+            self.b = q
 
 class is31fl3737(object):
     I2C_ADDR = 80
