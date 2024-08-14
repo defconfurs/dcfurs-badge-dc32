@@ -10,9 +10,9 @@ Black and assembled PCBs for sale to the public and DEFCON Furs staff badges wer
 The files in the PCB_Stuff directory consist of:
 
 - DCF2024 Badge_R1_Back.png - This is the back of the 1.0 badge as rendered by OSHPark.
-DCF2024 Badge_R1_Front.png - This is the front of the 1.0 badge as rendered by OSHPark.
-DCF2024-DC32-Badge-1.2.pdf - This is a PDF of the schematic.
-DCFurs 2024 Badge BoM.xlsx - This is an Excel spreadsheet of the Bill of Materials as exported from Google Docs.
+- DCF2024 Badge_R1_Front.png - This is the front of the 1.0 badge as rendered by OSHPark.
+- DCF2024-DC32-Badge-1.2.pdf - This is a PDF of the schematic.
+- DCFurs 2024 Badge BoM.xlsx - This is an Excel spreadsheet of the Bill of Materials as exported from Google Docs.
 
 Whats missing:
 - A better annotated version of the back of the badge, some parts are not clear in the current version (this will probably be a rendering of the 1.2 version that people got at DEF CON).
