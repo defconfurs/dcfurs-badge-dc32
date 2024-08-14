@@ -29,7 +29,7 @@ Whats missing:
 
 ## TODO
 
-- **Prize** Get Meshtastic working on the badghe and get a free badge next year!
+- **Prize** Get Meshtastic working on the badge and get a free badge next year!
 
 ## Post from the Telegram Chat
 So, were going to do a thing this year where the software on the badge is not complete and people are welcome to make it more complete.    On Wednesday or really early Thursday morning of the con, we will make the repo with this years software public.
@@ -55,6 +55,6 @@ We have been having a lot of "fun" getting this badge to you this year, PCBWay t
 - **PCB Design and PM** - Kyle "Kay" Fox
 - **Sales and Accounting** - Alofoxx
 - **Software** - Loial Otter
-- **Software and Build Toolchain** Naomi Kirby
+- **Software and Build Toolchain** - Naomi Kirby
 - **Ideas and maybe software someday** - NullFox
 - **Assembly and putting up with Kay** - Colin and Matt at PCBx.io.
