@@ -1,16 +1,35 @@
-
 ## Firmware
 
-We will be promoting builds from this repo to releases perodically, see the releases section for thje latest firmware.
+We will be promoting builds from this repo to releases perodically, see the releases section for the latest firmware.
 
 ## Updating
 
-When you load a new firmware uf2 file, it will not delete the existing micropython filesystem, so if you want updated python files, you can either copy them from this repo or delte all the files from that filesystem and hit the reset button on the badge and it will reload them.
+When you load a new firmware uf2 file, it will not delete the existing micropython filesystem, so if you want updated python files, you can either copy them from this repo or delete all the files from that filesystem and hit the reset button on the badge and it will reload them.
+
+## PCB Information
+
+As a policy, DEFCON Furs only makes public the schematic, board images and the Bill of Materials for the DEFCON Furs badges.   
+
+The BoM can be viewed online: https://docs.google.com/spreadsheets/d/1Jkg6oq2OzCKG4kRN5Ynu_qSia2YDe5dJ_6Gyr4F5ahs/edit?usp=sharing
+
+PCBs for the prototype and After Dark versions of the badge were manufactured by OSHPark in Oregon and assembled by Kay in Seattle.
+Black and assembled PCBs for sale to the public and DEFCON Furs staff badges were made by PCBWay in Shenzhen and assembled by PCBx.io in Ohio.
+
+The files in the PCB_Stuff directory consist of:
+
+- DCF2024 Badge_R1_Back.png - This is the back of the 1.0 badge as rendered by OSHPark.
+- DCF2024 Badge_R1_Front.png - This is the front of the 1.0 badge as rendered by OSHPark.
+- DCF2024-DC32-Badge-1.2.pdf - This is a PDF of the schematic.
+- DCFurs 2024 Badge BoM.xlsx - This is an Excel spreadsheet of the Bill of Materials as exported from Google Docs.
+
+Whats missing:
+- A better annotated version of the back of the badge, some parts are not clear in the current version (this will probably be a rendering of the 1.2 version that people got at DEF CON).
+- KiCAD files, minus the board.
+- Information about how to connect JTAG to the STM32WL chip.
 
 ## TODO
 
-- Boop is still not complete.   The touch code is working, we just dont have the animation yet.
-- **Prize** Get MEshtastic working on the badghe and get a free badge next year!
+- **Prize** Get Meshtastic working on the badghe and get a free badge next year!
 
 ## Post from the Telegram Chat
 So, were going to do a thing this year where the software on the badge is not complete and people are welcome to make it more complete.    On Wednesday or really early Thursday morning of the con, we will make the repo with this years software public.
@@ -29,3 +48,13 @@ If your going to muck around with the software on the STM32WL chip, you will wan
 The Tag-Connect connector on the badge is not wired in a way thats really helpful, my bad, next time it will be wired correctly.
 
 We have been having a lot of "fun" getting this badge to you this year, PCBWay took extra long this time and DHL and customs is an adventure as always.
+
+## Credits
+
+- **Artwork** - MAOW
+- **PCB Design and PM** - Kyle "Kay" Fox
+- **Sales and Accounting** - Alofoxx
+- **Software** - Loial Otter
+- **Software and Build Toolchain** Naomi Kirby
+- **Ideas and maybe software someday** - NullFox
+- **Assembly and putting up with Kay** - Colin and Matt at PCBx.io.
